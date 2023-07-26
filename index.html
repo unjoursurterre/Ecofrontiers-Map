@@ -6,6 +6,7 @@
 </head>
 
 <body>
+    <h1 style="text-align: center; font-family:Georgia, 'Times New Roman', Times, serif;">ReFi Asset Map</h1>"
     <div id="map" style="width: 100%; height: 500px;"></div>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js"></script>
 </body>
@@ -34,8 +35,8 @@
         const popup = new mapboxgl.Popup({closeButton: true, closeOnClick: false, offset: [0, -30], maxWidth: '500px'})
         .setHTML(
             `<h3>${title}</h3>
-            <p>${description}</p>
             <p>Asset Type: ${assetType}</p>
+            <p>${description}</p>
             <a href="${assetLink}" target="_blank">Buy the Asset</a>`
     );
 
