@@ -19,22 +19,32 @@
         zoom: 1,
     });
 
-    const marker = new mapboxgl.Marker()
-    .setLngLat([112.303519, -2.614493])
-    .addTo(map);
+    const projectTitle1 = "Rimba Raya Biodiversity Reserve Project";
+    const description1 = "This project protects 47,237 hectares of uninhabited peat swamp forest on the southern coast of Borneo, Central Kalimantan. Despite only covering about 3% of our planet's land, peatlands store twice as much carbon as all the world's forests. Under threate of being logged, drained and burned by palm oil plantations, this project protects the land, which is home to an orangutan sanctuary and 50 other endangered species.";
+    const assetLink1 = "https://app.regen.network/project/C03-001";
+    const assetType1 = "Eco-Credit";
 
-    const projectTitle = "Rimba Raya Biodiversity Reserve Project";
-    const description = "This project protects 47,237 hectares of uninhabited peat swamp forest on the southern coast of Borneo, Central Kalimantan. Despite only covering about 3% of our planet's land, peatlands store twice as much carbon as all the world's forests. Under threate of being logged, drained and burned by palm oil plantations, this project protects the land, which is home to an orangutan sanctuary and 50 other endangered species."
-    const assetLink = "https://app.regen.network/project/C03-001";
+    const projectTitle2 = "REDD+ Project Resguardo Indigena Unificado Selva de Mataven";
+    const description2 = "REDD+ Project Resguardo Indígena Unificado–Selva de Mataven (REDD+ RIU-SM) represents the fourth largest indigenous reservation in Colombia and protects 1.15M hectares of natural forests from deforestation. This project safeguards biodiversity and provides education, healthcare, sanitation, food security, and other co-benefits for 15K indigenous people. The protection of this area also serves as a gatekeeper for deforestation threats moving from the Orinoco Savannahs to the Amazon.";
+    const assetLink2 = "https://app.regen.network/project/C03-002";
+    const assetType2 = "Eco-Credit";
 
-    const popup = new mapboxgl.Popup({closeButton: false, closeOnClick: false})
-    .setHTML(
-        `<h3>${projectTitle}</h3>
-        <p>${description}</p>
-        <a href="${assetLink}" target="_blank">Buy the Asset</a>`
+    function createMarkerAndPopup(lngLat, title, description, assetType, assetLink) {
+        const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map);
+        const popup = new mapboxgl.Popup({closeButton: true, closeOnClick: false})
+        .setHTML(
+            `<h3>${title}</h3>
+            <p>${description}</p>
+            <p>Asset Type: ${assetType}</p>
+            <a href="${assetLink}" target="_blank">Buy the Asset</a>`
     );
 
     marker.setPopup(popup);
+    }
+
+createMarkerAndPopup([112.303519, -2.614493], projectTitle1, description1, assetType1, assetLink1);
+createMarkerAndPopup([-71.015625, 3.951942], projectTitle2, description2, assetType2, assetLink2);
+
 </script>
 
 </html>
