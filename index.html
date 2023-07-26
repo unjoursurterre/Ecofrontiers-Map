@@ -40,9 +40,19 @@
     const assetLink4 = "https://app.solid.world/projects/6/allcot-blue-carbon-mangrove-senegal";
     const assetType4 = "Forward Credit";
 
+    const projectTitle5 = "Fruit-Bearing NFTrees";
+    const description5 = "This NFTree is a yield-bearing green bond backed by a fruit tree such as pomegranate and fig tree. This batch was planted in February 2022. The owner of this NFTree will able to claim: 1) CO2 tokens are equivalent to the amount of CO2 absorbed by the actual tree. Currently, this NFTree compensates 25 kilos of CO2 per year. 1kg of CO2 = 1 CO2 token. 2) Yield produced by the sale of fruits of the tree in food markets. This yield starts in the fourth year after planting (2024). The estimated yield is 20%.";
+    const assetLink5 = "https://venly.market/offers/1a5c2ad2-4277-4e75-b335-882dd4c38696";
+    const assetType5 = "Real-World Asset";
+
+    const projectTitle6 = "Forest NFTrees";
+    const description6 = "This NFTree is a yield-bearing token (usufruct) backed by a real tree. The native trees are planted and managed by the Coorest company. This batch is a mixed forest of native trees: Oak - Quercus ilex, Sabina - juniperus phoenicea, Pinus Halepensis, Pinus uncinate, and was planted in March 2023. The owner of this NFTree has the right to claim: 250 CCO2 tokens, equivalent to the amount of CO2 absorbed by the trees. Currently, this NFTree compensates for approx. 250 kilos of CO2 per year.";
+    const assetLink6 = "https://venly.market/offers/8ce5c878-2955-4a03-84e1-67c6297ef34f";
+    const assetType6 = "Real-World Asset";
+
     function createMarkerAndPopup(lngLat, title, description, assetType, assetLink) {
         const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map);
-        const popup = new mapboxgl.Popup({closeButton: true, closeOnClick: false, offset: [0, -30], maxWidth: '500px'})
+        const popup = new mapboxgl.Popup({closeButton: true, closeOnClick: true, offset: [0, -30], maxWidth: '500px'})
         .setHTML(
             `<h3>${title}</h3>
             <p>Asset Type: ${assetType}</p>
@@ -68,6 +78,8 @@ createMarkerAndPopup([112.303519, -2.614493], projectTitle1, description1, asset
 createMarkerAndPopup([-71.015625, 3.951942], projectTitle2, description2, assetType2, assetLink2);
 createMarkerAndPopup([94.5, 17.0833], projectTitle3, description3, assetType3, assetLink3);
 createMarkerAndPopup([-16.2264, 12.8103], projectTitle4, description4, assetType4, assetLink4);
+createMarkerAndPopup([0.0802, 41.2541], projectTitle5, description5, assetType5, assetLink5);
+createMarkerAndPopup([0.899997, 41.649997], projectTitle6, description6, assetType6, assetLink6);
 
 </script>
 
