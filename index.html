@@ -30,6 +30,16 @@
     const assetLink2 = "https://app.regen.network/project/C03-002";
     const assetType2 = "Eco-Credit";
 
+    const projectTitle3 = "Myanmar Mangrove Restoration";
+    const description3 = "This project aims to restore a degraded mangrove ecosystem in the northern part of Ayeyarwady Division of Myanmar. The project will help the coastal communities to address issues including natural disaster risk reduction, biodiversity improvement and poverty reduction with sustainable livelihoods. It is registered with Verra project ID 1764. Solid World is offering 1000 forward credits each for 2022 to 2023, and 2000 forward credits for each year from 2024 to 2027 from the project.";
+    const assetLink3 = "https://app.solid.world/projects/5/myanmar-1764";
+    const assetType3 = "Forward Credit";
+
+    const projectTitle4 = "Senegal Mangrove Planting";
+    const description4 = "The 'ALLCOT Blue Carbon Mangrove Senegal' project follows VCS VM0033 methodology. The project has shown additionality using alternative land use scenarios, barrier analysis and common practice analysis. The project will plant 3 native species of mangroves and it will sequestrate an estimated 1.9 million tCO2e over a period of 2022-2052. Additionally, the project aims to improve the production and income of vulnerable groups, and strengthen their capacity to use land resources sustainably.";
+    const assetLink4 = "https://app.solid.world/projects/6/allcot-blue-carbon-mangrove-senegal";
+    const assetType4 = "Forward Credit";
+
     function createMarkerAndPopup(lngLat, title, description, assetType, assetLink) {
         const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map);
         const popup = new mapboxgl.Popup({closeButton: true, closeOnClick: false, offset: [0, -30], maxWidth: '500px'})
@@ -56,6 +66,8 @@
 
 createMarkerAndPopup([112.303519, -2.614493], projectTitle1, description1, assetType1, assetLink1);
 createMarkerAndPopup([-71.015625, 3.951942], projectTitle2, description2, assetType2, assetLink2);
+createMarkerAndPopup([94.5, 17.0833], projectTitle3, description3, assetType3, assetLink3);
+createMarkerAndPopup([-16.2264, 12.8103], projectTitle4, description4, assetType4, assetLink4);
 
 </script>
 
