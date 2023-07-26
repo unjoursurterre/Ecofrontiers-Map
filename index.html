@@ -15,8 +15,8 @@
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: [4.3528, 50.8467],
-        zoom: 1,
+        center: [20, 1.5],
+        zoom: 0,
     });
 
     const projectTitle1 = "Rimba Raya Biodiversity Reserve Project";
@@ -31,7 +31,7 @@
 
     function createMarkerAndPopup(lngLat, title, description, assetType, assetLink) {
         const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map);
-        const popup = new mapboxgl.Popup({closeButton: true, closeOnClick: false})
+        const popup = new mapboxgl.Popup({closeButton: true, closeOnClick: false, offset: [0, -30], maxWidth: '500px'})
         .setHTML(
             `<h3>${title}</h3>
             <p>${description}</p>
@@ -40,7 +40,18 @@
     );
 
     marker.setPopup(popup);
+
+    popup.addTo(map);
+
+    const popupHeight = popup._container.clientHeight;
+    const markerHeight = 50;
+
+    if (popupHeight > marker.getPopup().options.offset[1]) {
+        marker.getPopup().setOffset([0, -markerHeight]);
     }
+
+    popup.remove();
+}
 
 createMarkerAndPopup([112.303519, -2.614493], projectTitle1, description1, assetType1, assetLink1);
 createMarkerAndPopup([-71.015625, 3.951942], projectTitle2, description2, assetType2, assetLink2);
