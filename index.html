@@ -1,11 +1,15 @@
+<!DOCTYPE html>
+<html>
 <head>
     <title>ReFi Asset Map</title>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css" rel="stylesheet" />
 </head>
+
 <body>
     <div id="map" style="width: 100%; height: 500px;"></div>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js"></script>
 </body>
+
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoidW5qb3Vyc3VydGVycmUiLCJhIjoiY2xrZ3Yxa2ZoMDNsdzNma2VrZ3Rld3g4OCJ9.-TQXieKIGjEFOoND4VUfrA'
     const map = new mapboxgl.Map({
@@ -14,4 +18,23 @@
         center: [4.3528, 50.8467],
         zoom: 1,
     });
+
+    const marker = new mapboxgl.Marker()
+    .setLngLat([112.303519, -2.614493])
+    .addTo(map);
+
+    const projectTitle = "Rimba Raya Biodiversity Reserve Project";
+    const description = "This project protects 47,237 hectares of uninhabited peat swamp forest on the southern coast of Borneo, Central Kalimantan. Despite only covering about 3% of our planet's land, peatlands store twice as much carbon as all the world's forests. Under threate of being logged, drained and burned by palm oil plantations, this project protects the land, which is home to an orangutan sanctuary and 50 other endangered species."
+    const assetLink = "https://app.regen.network/project/C03-001";
+
+    const popup = new mapboxgl.Popup({closeButton: false, closeOnClick: false})
+    .setHTML(
+        `<h3>${projectTitle}</h3>
+        <p>${description}</p>
+        <a href="${assetLink}" target="_blank">Buy the Asset</a>`
+    );
+
+    marker.setPopup(popup);
 </script>
+
+</html>
