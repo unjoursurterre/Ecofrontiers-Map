@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>ReFi Asset Map</title>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css" rel="stylesheet" />
-</head>
-
-<body>
-    <h1 style="text-align: center; font-family:Georgia, 'Times New Roman', Times, serif;">ReFi Asset Map</h1>"
-    <div id="map" style="width: 100%; height: 500px;"></div>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js"></script>
-</body>
-
-<script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoidW5qb3Vyc3VydGVycmUiLCJhIjoiY2xrZ3Yxa2ZoMDNsdzNma2VrZ3Rld3g4OCJ9.-TQXieKIGjEFOoND4VUfrA'
+mapboxgl.accessToken = 'pk.eyJ1IjoidW5qb3Vyc3VydGVycmUiLCJhIjoiY2xrZ3Yxa2ZoMDNsdzNma2VrZ3Rld3g4OCJ9.-TQXieKIGjEFOoND4VUfrA'
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
@@ -80,7 +66,3 @@ createMarkerAndPopup([94.5, 17.0833], projectTitle3, description3, assetType3, a
 createMarkerAndPopup([-16.2264, 12.8103], projectTitle4, description4, assetType4, assetLink4);
 createMarkerAndPopup([0.0802, 41.2541], projectTitle5, description5, assetType5, assetLink5);
 createMarkerAndPopup([0.899997, 41.649997], projectTitle6, description6, assetType6, assetLink6);
-
-</script>
-
-</html>
