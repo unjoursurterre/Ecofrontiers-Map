@@ -1,0 +1,22 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "back-end of the ReFi Asset Map",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unjoursurterre/ReFiAssetMap.git"
+  },
+  "author": "unjoursurterre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/unjoursurterre/ReFiAssetMap/issues"
+  },
+  "homepage": "https://github.com/unjoursurterre/ReFiAssetMap#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
