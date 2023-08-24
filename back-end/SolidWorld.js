@@ -37,7 +37,7 @@ const url = "https://app.solid.world/projects";
 console.log('Before axios GET request');
 axios.get(url)
     .then(async response => {
-        console.log('Axios GET request succesful');
+        console.log('Axios GET request succesfull');
         const html = response.data;
         const $ = cheerio.load(html);
 
@@ -55,6 +55,10 @@ axios.get(url)
         for (const div of targetDivs) {
             console.log('Processing a div');
             const location = $(div).text().trim();
+
+            console.log('Extracted Data:', {
+                location
+            });
 
             // Check if the project already exists in the database
             const existingProject = await collection.findOne({ location });

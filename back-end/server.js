@@ -3,64 +3,78 @@ const axios = require('axios');
 const express = require('express');
 const app = express();
 const path = require('path');
+const cheerio = require("cheerio");
+
 const port = process.env.PORT || 3000;
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
-});
-
-const mongoURL = 'mongodb+srv://louise:Z04niNeVKEFR4erM@cluster0.miypx8l.mongodb.net/?retryWrites=true&w=majority';
+const mongoURL = 'mongodb+srv://louise:Z04niNeVKEFR4erM@cluster0.miypx8l.mongodb.net/?authSource=Cluster0&authMechanism=SCRAM-SHA-1';
 const dbName = 'ReFi-Asset-Map';
-
-const client = new MongoClient(mongoURL, { useUnifiedTopology: true });
-
 const collectionName = 'SolidWorld1';
 
-async function insertData(data) {
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'C:/Users/louis/Documents/Work/Coding Practice/ReFi Asset Map/public/index.html'));
+});
+
+app.get('/api/projects', async (req, res) => {
     try {
+        console.log('Before connecting to MongoDB');
+        const client = new MongoClient(mongoURL, {useUnifiedTopology: true});
         await client.connect();
         console.log('Connected to MongoDB');
-
         const db = client.db(dbName);
         const collection = db.collection(collectionName);
-
-        const result = await collection.insertMany(data);
-        console.log(`${result.insertedCount} documents inserted`, result.insertedIds);
+        const projects = await collection.find().toArray();
+        res.json(projects);
     } catch (error) {
-        console.error('Error inserting data:', error);
+        console.error('Error fetching project data:', error);
+        res.status(500).json({ error: 'An error occurred while fetching project data.' });
     } finally {
         client.close();
         console.log('Disconnected from MongoDB');
     }
-}
-
-const cheerio = require("cheerio");
+});
 
 const url = "https://app.solid.world/projects";
-
+console.log('Before axios GET request');
 axios.get(url)
     .then(async response => {
+        console.log('Axios GET request successfull');
         const html = response.data;
         const $ = cheerio.load(html);
 
-        const targetDivs = $('div.ProjectCard_card__3Yi_y');
+        const targetDivs = $('div.ProjectCard_projectInfo__6Ztff');
         const extractedData = [];
 
         const nominatimUrl = "https://nominatim.openstreetmap.org/search";
+
+        const client = new MongoClient(mongoURL, {useUnifiedTopology: true});
         await client.connect();
+        console.log('Connected to MongoDB');
         const db = client.db(dbName);
         const collection = db.collection(collectionName);
 
         for (const card of targetDivs) {
-            const location = $(card).find('div.ProjectCard_ellipsis__1NASF').text().trim();
-            console.log('Extracted location:', location);
-            const projectTitle = $(card).find('h2.ProjectCard_title__nsbeD').text().trim();
-            const assetLink = $(card).find('a.ProjectCard_link__KD__k').attr('href');
+            console.log('Processing a div');
+
+            const locationElement = $(card).find('.ProjectCard_ellipsis__1NASF');
+            const locationText = locationElement.text().trim();
+
+            // Use a regular expression to remove repeated patterns
+            const location = locationText.replace(/(.+?)\1+/, '$1').trim();
+            
+            const projectTitleElement = $(card).find('.ProjectCard_title__nsbeD');
+            const projectTitle = projectTitleElement.text().trim();
+
+            const descriptionElement = $(card).find('div.ProjectCard_description__e6LI_');
+            const description = descriptionElement.text().trim();
+           
+            const assetLinkElement = $(card).find('.ProjectCard_link__KD__k');
+            const assetLink = assetLinkElement.attr('href');
 
             console.log('Extracted Data:', {
                 location,
                 projectTitle,
                 assetLink,
+                description,
             });
 
             // Check if the project already exists in the database
@@ -88,6 +102,7 @@ axios.get(url)
                         location,
                         projectTitle,
                         assetLink,
+                        description,
                         coordinates,
                         assetType: 'Forward Credit',
                     });
@@ -96,7 +111,7 @@ axios.get(url)
         }
 
         if (extractedData.length > 0) {
-            await insertData(extractedData);
+            await insertData(collection, extractedData);
         } else {
             console.log('No new data to insert.');
         }
@@ -108,22 +123,15 @@ axios.get(url)
         console.error('Error fetching the page:', error);
     });
 
-app.get('/api/projects', async (req, res) => {
-    try {
-        await client.connect();
-        const db = client.db(dbName);
-        const collection = db.collection(collectionName);
-        const projects = await collection.find().toArray();
-        res.json(projects);
-    } catch (error) {
-        console.error('Error fetching project data:', error);
-        res.status(500).json({ error: 'An error occurred while fetching project data.' });
-    } finally {
-        client.close();
-    }
-});
-
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
+async function insertData(collection, data) {
+    try {
+        const result = await collection.insertMany(data);
+        console.log(`${result.insertedCount} documents inserted`, result.insertedIds);
+    } catch (error) {
+        console.error('Error inserting data:', error);
+    }
+}
