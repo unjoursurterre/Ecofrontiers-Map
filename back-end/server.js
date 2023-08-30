@@ -10,14 +10,15 @@ const mongoURL = 'mongodb+srv://louise:Z04niNeVKEFR4erM@cluster0.miypx8l.mongodb
 const dbName = 'ReFi-Asset-Map';
 const collectionName = 'SolidWorld1';
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'C:/Users/louis/Documents/Work/Coding Practice/ReFi Asset Map/public/index.html'));
-});
+let client;
+
+// Serve the front-end HTML
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/projects', async (req, res) => {
     try {
         console.log('Before connecting to MongoDB');
-        const client = new MongoClient(mongoURL, {useUnifiedTopology: true});
+        client = new MongoClient(mongoURL, {useUnifiedTopology: true});
         await client.connect();
         console.log('Connected to MongoDB');
         const db = client.db(dbName);
@@ -28,6 +29,7 @@ app.get('/api/projects', async (req, res) => {
         console.error('Error fetching project data:', error);
         res.status(500).json({ error: 'An error occurred while fetching project data.' });
     } finally {
+        // Close the connection after processing
         client.close();
         console.log('Disconnected from MongoDB');
     }
