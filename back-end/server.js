@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const axios = require('axios');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const path = require('path');
 const cheerio = require("cheerio");
@@ -11,6 +12,9 @@ const dbName = 'ReFi-Asset-Map';
 const collectionName = 'SolidWorld1';
 
 let client;
+
+// Use cors middleware to allow requests from all origins
+app.use(cors());
 
 // Serve the front-end HTML
 app.use(express.static(path.join(__dirname, 'public')));
