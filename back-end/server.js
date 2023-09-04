@@ -14,7 +14,7 @@ const collectionName = 'SolidWorld1';
 let client;
 
 // Use cors middleware to allow requests from all origins
-app.use(cors());
+app.use(cors({origin: 'http://localhost:8080'}));
 
 // Serve the front-end HTML
 app.use(express.static(path.join(__dirname, 'public')));
