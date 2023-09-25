@@ -4,12 +4,14 @@ const cors = require('cors');
 const app = express();
 const path = require('path');
 
-const { scrapeData } = require('./scrape');
+const { scrapeSolidWorldData } = require('./scrapeSolidWorld');
+const { fetchAndInsertRegenData } = require('./scrapeRegenNetwork');
 
 const port = process.env.PORT || 3000;
 const mongoURL = 'mongodb+srv://louise:Z04niNeVKEFR4erM@cluster0.miypx8l.mongodb.net/?authSource=Cluster0&authMechanism=SCRAM-SHA-1';
 const dbName = 'ReFi-Asset-Map';
-const collectionName = 'SolidWorld1';
+const solidWorldCollectionName = 'SolidWorld1';
+const regenNetworkCollectionName = 'RegenNetwork';
 
 let client;
 
@@ -19,16 +21,30 @@ app.use(cors({ origin: 'http://localhost:8080' }));
 // Serve the front-end HTML
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/api/scrape', async (req, res) => {
+app.get('/api/scrape/solidworld', async (req, res) => {
     try {
-        console.log('Scraping data...');
+        console.log('Scraping SolidWorld data...');
         const db = req.app.locals.db;
-        const projects = await scrapeData(db);
+        await scrapeSolidWorldData(db, solidWorldCollectionName);
 
-        res.json({ message: 'Scraping complete', projects });
+        res.json({ message: 'SolidWorld scraping complete', projects });
     } catch (error) {
-        console.error('Error scraping data:', error);
-        res.status(500).json({ error: 'An error occurred while scraping data.' });
+        console.error('Error scraping SolidWorld data:', error);
+        res.status(500).json({ error: 'An error occurred while scraping SolidWorld data.' });
+    }
+});
+
+app.get('/api/scrape/regennetwork', async (req, res) => {
+    try {
+        console.log('Scraping Regen Network data...');
+        const db = req.app.locals.db;
+        const collection = db.collection(regenNetworkCollectionName);
+        await fetchAndInsertRegenData(collection);
+
+        res.json({ message: 'Regen Network scraping complete'});
+    } catch (error) {
+        console.error('Error scraping Regen Network data:', error);
+        res.status(500).json({ error: 'An error occurred while scraping Regen Network data.'});
     }
 });
 

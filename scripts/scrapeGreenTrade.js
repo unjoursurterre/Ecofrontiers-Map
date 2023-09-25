@@ -7,7 +7,7 @@ const mongoURL =
 const dbName = 'ReFi-Asset-Map';
 const collectionName = 'SolidWorld1';
 
-const scrapeData = async (db) => {
+const scrapeSolidWorldData = async (db) => {
   try {
     const url = 'https://app.solid.world/projects';
     const response = await axios.get(url);
@@ -103,4 +103,4 @@ async function insertData(collection, data) {
   }
 }
 
-module.exports = { scrapeData };
+module.exports = { scrapeSolidWorldData };
