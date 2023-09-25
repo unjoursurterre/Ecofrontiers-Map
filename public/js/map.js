@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOMContentLoaded event fired');
 
@@ -13,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 try {
     // Make a request to the back-end API to fetch project data
     console.log('Making API request...');
-    const response = await axios.get('http://localhost:3000/api/projects');
+    const response = await axios.get('http://localhost:3000/api/scrape');
     console.log('Received project data:', response.data);
 
     // Create a marker for each project (example data)
