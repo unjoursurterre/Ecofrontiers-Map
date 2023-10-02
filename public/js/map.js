@@ -8,7 +8,7 @@ const map = new mapboxgl.Map({
 });
 
 // Load marker data from a JSON file and add markers
-fetch('../models/marker_data.json')
+fetch('../models/all_marker_data.json')
     .then(response => response.json())
     .then(data => {
         console.log(data);
@@ -17,9 +17,17 @@ fetch('../models/marker_data.json')
             const marker = new mapboxgl.Marker()
                 .setLngLat([asset.longitude, asset.latitude])
                 .addTo(map);
+            
+            // Create the HTML content for the pop-up
+            const popupContent = `
+                <h3>${asset.project_title}</h3>
+                <p><strong>Asset Type:</strong> ${asset.asset_type}</p>
+                <p><strong>Description:</strong> ${asset.description}</p>
+                <a href="${asset.asset_link}" target="_blank">Buy here</a>
+                `;
 
             const popup = new mapboxgl.Popup()
-                .setHTML(asset.project_title);
+                .setHTML(popupContent);
             marker.setPopup(popup);
         });
     });
