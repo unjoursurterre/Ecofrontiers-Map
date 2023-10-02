@@ -36,7 +36,14 @@ const fetchRegenNetworkData = async (url) => {
 const processAndInsertData = async (collection, data) => {
   try {
     const projectTitle = data['schema:name'] || 'Unknown Title';
-    const coordinates = data['geometry']?.['coordinates'] || 'Unknown Coordinates'
+    const coordinatesArray = data['schema:location']?.['geometry']?.['coordinates'] || 'Unknown Coordinates';
+
+    // Transform the coordinates array into an object with "lat" and "lng" fields
+    const coordinates = {
+      lat: coordinatesArray[1],
+      lng: coordinatesArray[0],
+    };
+    
     const assetType = data['regen:projectActivity']?.['schema:name'] || data['regen:projectActivity'] || 'Toucan Carbon Credit';
     const assetLink = data['@id'] || 'https://app.regen.network/projects/1';
     const description = data['regen:offsetProtocol']?.['schema:name'] || data['regen:projectType'] || 'Carbon credit bridged from Toucan';
@@ -65,4 +72,4 @@ const fetchAndInsertRegenData = async (collection) => {
   }
 };
 
-module.export = { fetchAndInsertRegenData };
+module.exports = { fetchAndInsertRegenData };
