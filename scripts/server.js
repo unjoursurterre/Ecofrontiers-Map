@@ -6,12 +6,14 @@ const path = require('path');
 
 const { scrapeSolidWorldData } = require('./scrapeSolidWorld');
 const { fetchAndInsertRegenData } = require('./scrapeRegenNetwork');
+const { scrapeGreenTradeData } = require('./scrapeGreenTrade');
 
 const port = process.env.PORT || 3000;
 const mongoURL = 'mongodb+srv://louise:Z04niNeVKEFR4erM@cluster0.miypx8l.mongodb.net/?authSource=Cluster0&authMechanism=SCRAM-SHA-1';
 const dbName = 'ReFi-Asset-Map';
 const solidWorldCollectionName = 'SolidWorld1';
 const regenNetworkCollectionName = 'RegenNetwork';
+const greenTradeCollectionName = 'GreenTrade';
 
 let client;
 
@@ -45,6 +47,19 @@ app.get('/api/scrape/regennetwork', async (req, res) => {
     } catch (error) {
         console.error('Error scraping Regen Network data:', error);
         res.status(500).json({ error: 'An error occurred while scraping Regen Network data.'});
+    }
+});
+
+app.get('/api/scrape/GreenTrade', async (req, res) => {
+    try {
+        console.log('Scraping GreenTrade data...');
+        const db = req.app.locals.db;
+        await scrapeGreenTradeData(db, greenTradeCollectionName);
+
+        res.json({ message: 'GreenTrade scraping complete' });
+    } catch (error) {
+        console.error('Error scraping GreenTrade data:', error);
+        res.status(500).json({ error: 'An error occurred while scraping GreenTrade data.' });
     }
 });
 

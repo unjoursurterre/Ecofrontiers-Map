@@ -5,18 +5,18 @@ const { MongoClient } = require('mongodb');
 const mongoURL =
   'mongodb+srv://louise:Z04niNeVKEFR4erM@cluster0.miypx8l.mongodb.net/?authSource=Cluster0&authMechanism=SCRAM-SHA-1';
 const dbName = 'ReFi-Asset-Map';
-const collectionName = 'SolidWorld1';
+const collectionName = 'GreenTrade';
 
-const scrapeSolidWorldData = async (db) => {
+const scrapeGreenTradeData = async (db) => {
   try {
-    const url = 'https://app.solid.world/projects';
+    const url = 'https://app.greentrade.tech/project/index';
     const response = await axios.get(url);
     console.log('Axios GET request successful');
     const html = response.data;
     console.log(response.data);
     const $ = cheerio.load(html);
 
-    const targetDivs = $('div.ProjectCard_projectInfo__H1Wrw');
+    const targetDivs = $('.project-list-items');
     console.log(targetDivs.length);
     const extractedData = [];
 
@@ -27,20 +27,19 @@ const scrapeSolidWorldData = async (db) => {
     console.log('Before for loop');
     for (const card of targetDivs) {
       console.log('Processing a div');
+      
+      const table = $('.project-card-body__provider table');
 
-      const locationElement = $(card).find('.ProjectCard_ellipsis__wpFFf');
-      const locationText = locationElement.text().trim();
-        
-      // Use a regular expression to remove repeated patterns
-      const location = locationText.replace(/(.+?)\1+/, '$1').trim();
-                    
-      const projectTitleElement = $(card).find('.ProjectCard_title__VpqBn');
+      const locationRow = $('tr', table)[0];
+      const descriptionRow = $('tr', table)[1];
+      
+      const location = $(locationRow).find('td').eq(1).text().trim();
+      const description = $(descriptionRow).find('td').eq(1).text().trim();
+
+      const projectTitleElement = $(card).find('.project-card-body__name');
       const projectTitle = projectTitleElement.text().trim();
-        
-      const descriptionElement = $(card).find('div.ProjectCard_description__cg9_P');
-      const description = descriptionElement.text().trim();
                    
-      const assetLinkElement = $(card).find('.ProjectCard_link__IeEc_');
+      const assetLinkElement = $(card).find('.left');
       const assetLink = assetLinkElement.attr('href');
         
       console.log('Extracted Data:', {
@@ -103,4 +102,4 @@ async function insertData(collection, data) {
   }
 }
 
-module.exports = { scrapeSolidWorldData };
+module.exports = { scrapeGreenTradeData };
