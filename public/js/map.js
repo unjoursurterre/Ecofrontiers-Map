@@ -4,7 +4,7 @@ const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [20, 1.5],
-    zoom: 0
+    zoom: 10, // There is an issue here: Zoom default level is not being applied.
 });
 
 // Load marker data from a JSON file and add markers
