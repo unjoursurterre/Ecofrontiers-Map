@@ -8,7 +8,7 @@ const map = new mapboxgl.Map({
 });
 
 // Load marker data from a JSON file and add markers
-fetch('../models/all_marker_data.json')
+fetch('../models/all_marker_data.json?' + new Date().getTime())
     .then(response => response.json())
     .then(data => {
         console.log(data);
@@ -23,7 +23,7 @@ fetch('../models/all_marker_data.json')
                 <h3>${asset.project_title}</h3>
                 <p><strong>Asset Type:</strong> ${asset.asset_type}</p>
                 <p><strong>Description:</strong> ${asset.description}</p>
-                <h3>Seller: ${asset.seller}</h3>
+                <p><strong>Seller:</strong> ${asset.seller}</p>
                 <a href="${asset.asset_link}" target="_blank">Buy here</a>
                 `;
 
