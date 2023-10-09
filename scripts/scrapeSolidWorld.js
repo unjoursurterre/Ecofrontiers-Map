@@ -41,7 +41,10 @@ const scrapeSolidWorldData = async (db) => {
       const description = descriptionElement.text().trim();
                    
       const assetLinkElement = $(card).find('.ProjectCard_link__IeEc_');
-      const assetLink = assetLinkElement.attr('href');
+      const relativeAssetLink = assetLinkElement.attr('href');
+
+      // Concatenate the base URL with the relative asset link
+      const assetLink = `https://app.solid.world${relativeAssetLink}`;
         
       console.log('Extracted Data:', {
         location,
