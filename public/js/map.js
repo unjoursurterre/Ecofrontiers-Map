@@ -3,8 +3,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidW5qb3Vyc3VydGVycmUiLCJhIjoiY2xtbDVlZmtxMDdrb
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
-    center: [20, 1.5],
-    zoom: 10, // There is an issue here: Zoom default level is not being applied.
+    center: [5, 1.5],
+    zoom: 1.5,
 });
 
 // Load marker data from a JSON file and add markers
@@ -23,6 +23,7 @@ fetch('../models/all_marker_data.json')
                 <h3>${asset.project_title}</h3>
                 <p><strong>Asset Type:</strong> ${asset.asset_type}</p>
                 <p><strong>Description:</strong> ${asset.description}</p>
+                <h3>Seller: ${asset.seller}</h3>
                 <a href="${asset.asset_link}" target="_blank">Buy here</a>
                 `;
 

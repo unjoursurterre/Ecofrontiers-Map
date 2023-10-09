@@ -43,10 +43,16 @@ const processAndInsertData = async (collection, data) => {
       lat: coordinatesArray[1],
       lng: coordinatesArray[0],
     };
+
+    // Determine the asset type based on the URL
+    let assetType = 'Carbon Offset';
+    if (url === 'https://api.regen.network/data/v1/metadata-graph/regen:13toVgEs67VyTgaLnLGk5ms9BwxGcjvZgiMcbGcgM2ttdWpfDhBHtZx.rdf') {
+      assetType = 'Non-Carbon Offset';
+    }
     
-    const assetType = data['regen:projectActivity']?.['schema:name'] || data['regen:projectActivity'] || 'Toucan Carbon Credit';
     const assetLink = data['@id'] || 'https://app.regen.network/projects/1';
-    const description = data['regen:offsetProtocol']?.['schema:name'] || data['regen:projectType'] || 'Carbon credit bridged from Toucan';
+    const description = data['regen:offsetProtocol']?.['schema:name'] || data['regen:projectType'] || 'Carbon offset bridged from Toucan Protocol';
+    const seller = 'Regen Network'
 
     const filteredData = {
       projectTitle,
@@ -54,6 +60,7 @@ const processAndInsertData = async (collection, data) => {
       assetType,
       assetLink,
       description,
+      seller
     };
 
     await collection.insertOne(filteredData);
@@ -67,7 +74,43 @@ const fetchAndInsertRegenData = async (collection) => {
   for (const apiURL of apiURLs) {
     const data = await fetchRegenNetworkData(apiURL);
     if (data) {
-      await processAndInsertData(collection, data)
+      const projectTitle = data['schema:name'];
+
+      // Define coordinates within the loop using data
+      const coordinatesArray = data['schema:location']?.['geometry']?.['coordinates'];
+      const coordinates = {
+        lat: coordinatesArray ? coordinatesArray[1] : 'Unknown Latitude',
+        lng: coordinatesArray ? coordinatesArray[0] : 'Unknown Longitude',
+      };
+
+      let assetType = 'Carbon Offset';
+      if (apiURL === 'https://api.regen.network/data/v1/metadata-graph/regen:13toVgEs67VyTgaLnLGk5ms9BwxGcjvZgiMcbGcgM2ttdWpfDhBHtZx.rdf') {
+        assetType = 'Non-Carbon Offset';
+      }
+
+      const assetLink = data['@id'] || 'https://app.regen.network/projects/1';
+      const description = data['regen:offsetProtocol']?.['schema:name'] || data['regen:projectType'] || 'Carbon offset bridged from Toucan Protocol';
+
+      // Check if a document with the same project title already exists
+      const filter = { projectTitle };
+      const update = {
+        $set: {
+          projectTitle,
+          coordinates,
+          assetType,
+          assetLink,
+          description,
+          seller: 'Regen Network'
+        }
+      };
+      const options = { upsert: true };
+
+      const result = await collection.updateOne(filter, update, options);
+      if (result.upsertedCount > 0) {
+        console.log('Inserted data for', projectTitle);
+      } else {
+        console.log('Updated data for', projectTitle);
+      }
     }
   }
 };

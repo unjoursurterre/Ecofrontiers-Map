@@ -76,7 +76,7 @@ const scrapeGreenTradeData = async (db) => {
             assetLink,
             description,
             coordinates,
-            assetType: 'Forward Credit',
+            assetType: 'Forward Carbon Offset',
           });
         }
       }

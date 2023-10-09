@@ -51,34 +51,44 @@ const scrapeSolidWorldData = async (db) => {
       });
         
       // Check if the project already exists in the database
-      const existingProject = await collection.findOne({ location });
+      const filter = { projectTitle };
+      const existingProject = await collection.findOne(filter);
       console.log('Existing Project:', existingProject);
         
-      if (!existingProject) {
-        // Send a GET request to Nominatim API
-        console.log('Nominatim API Request:', nominatimUrl + '?q=' + location);
-        const nominatimResponse = await axios.get(nominatimUrl, {
-          params: {
-            q: location,
-            format: 'json',
-          },
-        });
-        console.log('Nominatim API Response:', nominatimResponse.data);
+      // Send a GET request to Nominatim API
+      console.log('Nominatim API Request:', nominatimUrl + '?q=' + location);
+      const nominatimResponse = await axios.get(nominatimUrl, {
+        params: {
+          q: location,
+          format: 'json',
+        },
+      });
+      console.log('Nominatim API Response:', nominatimResponse.data);
 
-        if (nominatimResponse.data.length > 0) {
-          const coordinates = {
-            lat: nominatimResponse.data[0].lat,
-            lng: nominatimResponse.data[0].lon,
-          };
+      if (nominatimResponse.data.length > 0) {
+        const coordinates = {
+          lat: nominatimResponse.data[0].lat,
+          lng: nominatimResponse.data[0].lon,
+        };
 
-          extractedData.push({
-            location,
-            projectTitle,
-            assetLink,
-            description,
-            coordinates,
-            assetType: 'Forward Credit',
-          });
+        const newData = {
+          location,
+          projectTitle,
+          assetLink,
+          description,
+          coordinates,
+          assetType: 'Forward Carbon Offset',
+          seller: 'SolidWorld'
+        };
+
+        if (existingProject) {
+          // If the project exists, update the existing document
+          await collection.updateOne(filter, { $set: newData });
+          console.log('Updated data for', projectTitle);
+        } else {
+          // If the project doesn't exist, insert a new document
+          extractedData.push(newData);
+          console.log('Inserted data for', projectTitle);
         }
       }
     }

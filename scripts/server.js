@@ -29,7 +29,7 @@ app.get('/api/scrape/solidworld', async (req, res) => {
         const db = req.app.locals.db;
         await scrapeSolidWorldData(db, solidWorldCollectionName);
 
-        res.json({ message: 'SolidWorld scraping complete', projects });
+        res.json({ message: 'SolidWorld scraping complete' });
     } catch (error) {
         console.error('Error scraping SolidWorld data:', error);
         res.status(500).json({ error: 'An error occurred while scraping SolidWorld data.' });
