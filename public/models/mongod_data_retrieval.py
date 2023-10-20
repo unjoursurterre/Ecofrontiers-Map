@@ -8,7 +8,7 @@ client = MongoClient(connection_string)
 db = client['ReFi-Asset-Map']
 
 # Define the collections you want to retrieve data from as a list of collection names
-collection_names = ['SolidWorld1', 'RegenNetwork']
+collection_names = ['SolidWorld1', 'RegenNetwork', 'Coorest']
 
 # Initialize a list to store all marker data
 all_marker_data = []

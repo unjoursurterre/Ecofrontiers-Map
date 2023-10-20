@@ -7,6 +7,7 @@ const path = require('path');
 const { scrapeSolidWorldData } = require('./scrapeSolidWorld');
 const { fetchAndInsertRegenData } = require('./scrapeRegenNetwork');
 const { scrapeGreenTradeData } = require('./scrapeGreenTrade');
+const { scrapeCoorestData } = require('./scrapeCoorest');
 
 const port = process.env.PORT || 3000;
 const mongoURL = 'mongodb+srv://louise:Z04niNeVKEFR4erM@cluster0.miypx8l.mongodb.net/?authSource=Cluster0&authMechanism=SCRAM-SHA-1';
@@ -14,6 +15,7 @@ const dbName = 'ReFi-Asset-Map';
 const solidWorldCollectionName = 'SolidWorld1';
 const regenNetworkCollectionName = 'RegenNetwork';
 const greenTradeCollectionName = 'GreenTrade';
+const coorestCollectionName = "Coorest";
 
 let client;
 
@@ -60,6 +62,19 @@ app.get('/api/scrape/GreenTrade', async (req, res) => {
     } catch (error) {
         console.error('Error scraping GreenTrade data:', error);
         res.status(500).json({ error: 'An error occurred while scraping GreenTrade data.' });
+    }
+});
+
+app.get('/api/scrape/Coorest', async (req, res) => {
+    try {
+        console.log('Scraping Coorest data...');
+        const db = req.app.locals.db;
+        await scrapeCoorestData(db, coorestCollectionName);
+
+        res.json({ message: 'Coorest scraping complete' });
+    } catch (error) {
+        console.error('Error scraping Coorest data:', error);
+        res.status(500).json({ error: 'An error occurred while scraping Coorest data.' });
     }
 });
 
