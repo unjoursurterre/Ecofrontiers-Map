@@ -35,7 +35,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     // Create hard-coded marker for Moss 1
     const mossMarker1 = new mapboxgl.Marker()
-        .setLngLat([-1.359498562, -48.369831854])
+        .setLngLat([-57.965403, -6.608967])
         .addTo(map);
     
     const mossMarker1Content = `
@@ -52,7 +52,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     // Create hard-coded marker for Moss 2
     const mossMarker2 = new mapboxgl.Marker()
-        .setLngLat([-1.99, -54])
+        .setLngLat([-57.277130, -4.799042])
         .addTo(map);
     
     const mossMarker2Content = `
@@ -69,7 +69,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     // Create hard-coded marker for FlowCarbon
     const FlowCarbon = new mapboxgl.Marker()
-        .setLngLat([-23.3512605, -58.7373634])
+        .setLngLat([-58.7373634, -23.3512605])
         .addTo(map);
     
     const FlowCarbonContent = `
@@ -86,7 +86,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     // Create hard-coded marker for Creol 1
     const Creol1 = new mapboxgl.Marker()
-        .setLngLat([-3.74912, -73.25383])
+        .setLngLat([-73.25383, -3.74912])
         .addTo(map);
     
     const Creol1Content = `
@@ -103,7 +103,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     // Create hard-coded marker for Frigg.eco
     const FriggEco = new mapboxgl.Marker()
-        .setLngLat([-2.65111, 29.5817])
+        .setLngLat([29.5817, -2.65111])
         .addTo(map);
     
     const FriggEcoContent = `

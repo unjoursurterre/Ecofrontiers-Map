@@ -1,14 +1,14 @@
-# ReFi Asset Map
+# Ecofrontiers Map
 
 ## General
 
-The ReFi Asset Map is a map interface enabling the discovery of tokenized natural capital assets throughout the globe.
+The Ecofrontiers Map is a map interface enabling the discovery of tokenized natural capital assets throughout the globe.
 
 The map will be developed following three phases:
 
 1. Displaying of all tokenized natural capital assets.
-2. Enabling the buying of tokenized natural capital assets directly on the map.
-3. Projects aiming to tokenize natural capital can list their projects on the map to request funding.
+2. Projects aiming to tokenize natural capital can list their projects on the map to request funding. 
+3. Enabling the buying of tokenized natural capital assets directly on the map.
 
 ## Target Audience
 
