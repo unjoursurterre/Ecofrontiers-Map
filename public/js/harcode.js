@@ -6,7 +6,7 @@ map.on('error', (e) => {
 
 // Create hard-coded marker for Moss 1
 const mossMarker1 = new mapboxgl.Marker()
-    .setLngLat([-54, -1.99])
+    .setLngLat([-1.99, -54])
     .addTo(map);
 
 const mossMarker1Content = `
@@ -23,7 +23,7 @@ mossMarker1.setPopup(mossMarker1Popup);
 
 // Create hard-coded marker for Moss 2
 const mossMarker2 = new mapboxgl.Marker()
-    .setLngLat([-54.930615, -1.998127])
+    .setLngLat([-1.998127, -54.930615])
     .addTo(map);
 
 const mossMarker2Content = `
