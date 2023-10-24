@@ -1,14 +1,12 @@
 const mapboxgl = import('mapbox-gl');
 
-// Rest of the map.js code should come here
-
 map.on('error', (e) => {
     console.error('Map error:', e.error.message);
 });
 
 // Create hard-coded marker for Moss 1
 const mossMarker1 = new mapboxgl.Marker()
-    .setLngLat([-1.359498562, -48.369831854])
+    .setLngLat([-54, -1.99])
     .addTo(map);
 
 const mossMarker1Content = `
@@ -25,7 +23,7 @@ mossMarker1.setPopup(mossMarker1Popup);
 
 // Create hard-coded marker for Moss 2
 const mossMarker2 = new mapboxgl.Marker()
-    .setLngLat([-1.359498562, -48.369831854])
+    .setLngLat([-54.930615, -1.998127])
     .addTo(map);
 
 const mossMarker2Content = `
@@ -42,7 +40,7 @@ mossMarker2.setPopup(mossMarker2Popup);
 
 // Create hard-coded marker for FlowCarbon
 const FlowCarbon = new mapboxgl.Marker()
-    .setLngLat([-26.333333, -60.5])
+    .setLngLat([-23.3512605, -58.7373634])
     .addTo(map);
 
 const FlowCarbonContent = `
@@ -59,14 +57,14 @@ FlowCarbon.setPopup(FlowCarbonPopup);
 
 // Create hard-coded marker for Creol 1
 const Creol1 = new mapboxgl.Marker()
-    .setLngLat([-4, -69])
+    .setLngLat([-3.74912, -73.25383])
     .addTo(map);
 
 const Creol1Content = `
     <h3>Preserving the Amazon</h3>
-    <p><strong>Asset Type: Carbon Offset</strong> </p>
-    <p><strong>Description: This project reduces deforestation in the Peruvian Amazon by improving forest management and promoting sustainable nut harvesting. This will help protect critical rainforest habitat and endangered species, while supporting the livelihoods of indigenous communities.</strong> /p>
-    <p><strong>Issuer: Creol</strong> EthicHub</p>
+    <p><strong>Asset Type:</strong> Carbon Offset</p>
+    <p><strong>Description: </strong> This project reduces deforestation in the Peruvian Amazon by improving forest management and promoting sustainable nut harvesting. This will help protect critical rainforest habitat and endangered species, while supporting the livelihoods of indigenous communities.</p>
+    <p><strong>Issuer:</strong> Creol</p>
     <a href="https://beta.creol.io/#/home" target="_blank">Buy here</a>
     `
 
