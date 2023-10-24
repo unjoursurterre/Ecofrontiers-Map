@@ -52,7 +52,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     // Create hard-coded marker for Moss 2
     const mossMarker2 = new mapboxgl.Marker()
-        .setLngLat([-1.359498562, -48.369831854])
+        .setLngLat([-1.99, -54])
         .addTo(map);
     
     const mossMarker2Content = `
@@ -69,7 +69,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     // Create hard-coded marker for FlowCarbon
     const FlowCarbon = new mapboxgl.Marker()
-        .setLngLat([-26.333333, -60.5])
+        .setLngLat([-23.3512605, -58.7373634])
         .addTo(map);
     
     const FlowCarbonContent = `
@@ -86,13 +86,13 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     // Create hard-coded marker for Creol 1
     const Creol1 = new mapboxgl.Marker()
-        .setLngLat([-4, -69])
+        .setLngLat([-3.74912, -73.25383])
         .addTo(map);
     
     const Creol1Content = `
         <h3>Preserving the Amazon</h3>
-        <p><strong>Asset Type: Carbon Offset</strong> </p>
-        <p><strong>Description: This project reduces deforestation in the Peruvian Amazon by improving forest management and promoting sustainable nut harvesting. This will help protect critical rainforest habitat and endangered species, while supporting the livelihoods of indigenous communities.</strong> /p>
+        <p><strong>Asset Type: </strong> Carbon Offset</p>
+        <p><strong>Description: </strong> This project reduces deforestation in the Peruvian Amazon by improving forest management and promoting sustainable nut harvesting. This will help protect critical rainforest habitat and endangered species, while supporting the livelihoods of indigenous communities.</p>
         <p><strong>Issuer:</strong> Creol</p>
         <a href="https://beta.creol.io/#/home" target="_blank">Buy here</a>
         `
@@ -103,7 +103,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     // Create hard-coded marker for Frigg.eco
     const FriggEco = new mapboxgl.Marker()
-        .setLngLat([29.67222, -2.755])
+        .setLngLat([-2.65111, 29.5817])
         .addTo(map);
     
     const FriggEcoContent = `
@@ -116,4 +116,4 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
     
     const FriggEcoPopup = new mapboxgl.Popup()
         .setHTML(FriggEcoContent);
-    FriggEco.setPopup(FriggEcoContent);
+    FriggEco.setPopup(FriggEcoPopup);
