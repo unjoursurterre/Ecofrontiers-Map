@@ -1,4 +1,4 @@
-const mapboxgl = require('mapbox-gl');
+const mapboxgl = import('mapbox-gl');
 
 // Rest of the map.js code should come here
 
@@ -47,7 +47,7 @@ const FlowCarbon = new mapboxgl.Marker()
 
 const FlowCarbonContent = `
     <h3>Corazon Verde Del Chaco Project</h3>
-    <p><strong>Asset Type:</strong> Carbon Forward</p>
+    <p><strong>Asset Type:</strong> Forward Carbon Offset</p>
     <p><strong>Description:</strong> This first pool was created to finance important conservation work and carbon avoidance in the Corazón Verde Del Chaco Project (VCS 2611), located in Paraguay within the Gran Chaco Forest. The Gran Chaco is the second-largest forest in South America, behind only the Amazon rainforest and it has one of the highest deforestation rates on the planet due to conversion to cropland and pasture for cattle.</p>
     <p><strong>Issuer:</strong> FlowCarbon</p>
     <a href="https://legacy.tinlake.centrifuge.io/pool/0xd8486c565098360a24f858088a6d29a380ddf7ec/flowcarbon-1" target="_blank">Buy here</a>
@@ -57,22 +57,22 @@ const FlowCarbonPopup = new mapboxgl.Popup()
     .setHTML(FlowCarbonContent);
 FlowCarbon.setPopup(FlowCarbonPopup);
 
-// Create hard-coded marker for EthicHub
-const EthicHub = new mapboxgl.Marker()
-    .setLngLat([])
+// Create hard-coded marker for Creol 1
+const Creol1 = new mapboxgl.Marker()
+    .setLngLat([-4, -69])
     .addTo(map);
 
-const EthicHubContent = `
-    <h3> </h3>
-    <p><strong>Asset Type:</strong> </p>
-    <p><strong>Description:</strong> /p>
-    <p><strong>Issuer:</strong> EthicHub</p>
-    <a href="" target="_blank">Buy here</a>
+const Creol1Content = `
+    <h3>Preserving the Amazon</h3>
+    <p><strong>Asset Type: Carbon Offset</strong> </p>
+    <p><strong>Description: This project reduces deforestation in the Peruvian Amazon by improving forest management and promoting sustainable nut harvesting. This will help protect critical rainforest habitat and endangered species, while supporting the livelihoods of indigenous communities.</strong> /p>
+    <p><strong>Issuer: Creol</strong> EthicHub</p>
+    <a href="https://beta.creol.io/#/home" target="_blank">Buy here</a>
     `
 
-const EthicHubPopup = new mapboxgl.Popup()
-    .setHTML(EthicHubContent);
-EthicHub.setPopup(EthicHubPopup);
+const Creol1Popup = new mapboxgl.Popup()
+    .setHTML(Creol1Content);
+Creol1.setPopup(Creol1Popup);
 
 // Create hard-coded marker for Frigg.eco
 const FriggEco = new mapboxgl.Marker()
