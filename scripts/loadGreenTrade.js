@@ -7,7 +7,7 @@ const mongoURL =
 const dbName = 'ReFi-Asset-Map';
 const collectionName = 'GreenTrade';
 
-const scrapeGreenTradeData = async (db) => {
+const loadGreenTradeData = async (db) => {
   try {
     const url = 'https://app.greentrade.tech/project/index';
     const response = await axios.get(url);
@@ -102,4 +102,4 @@ async function insertData(collection, data) {
   }
 }
 
-module.exports = { scrapeGreenTradeData };
+module.exports = { loadGreenTradeData };

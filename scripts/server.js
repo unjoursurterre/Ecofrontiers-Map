@@ -4,10 +4,10 @@ const cors = require('cors');
 const app = express();
 const path = require('path');
 
-const { scrapeSolidWorldData } = require('./scrapeSolidWorld');
-const { fetchAndInsertRegenData } = require('./scrapeRegenNetwork');
-const { scrapeGreenTradeData } = require('./scrapeGreenTrade');
-const { scrapeCoorestData } = require('./scrapeCoorest');
+const { loadSolidWorldData } = require('./loadSolidWorld');
+const { loadRegenData } = require('./loadRegenNetwork');
+const { loadGreenTradeData } = require('./loadGreenTrade');
+const { loadCoorestData } = require('./loadCoorest');
 
 const port = process.env.PORT || 3000;
 const mongoURL = 'mongodb+srv://louise:Z04niNeVKEFR4erM@cluster0.miypx8l.mongodb.net/?authSource=Cluster0&authMechanism=SCRAM-SHA-1';
@@ -25,56 +25,56 @@ app.use(cors({ origin: 'http://localhost:8080' }));
 // Serve the front-end HTML
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/api/scrape/solidworld', async (req, res) => {
+app.get('/api/load/solidworld', async (req, res) => {
     try {
-        console.log('Scraping SolidWorld data...');
+        console.log('Loading SolidWorld data...');
         const db = req.app.locals.db;
-        await scrapeSolidWorldData(db, solidWorldCollectionName);
+        await loadSolidWorldData(db, solidWorldCollectionName);
 
-        res.json({ message: 'SolidWorld scraping complete' });
+        res.json({ message: 'SolidWorld loading complete' });
     } catch (error) {
-        console.error('Error scraping SolidWorld data:', error);
-        res.status(500).json({ error: 'An error occurred while scraping SolidWorld data.' });
+        console.error('Error loading SolidWorld data:', error);
+        res.status(500).json({ error: 'An error occurred while loading SolidWorld data.' });
     }
 });
 
-app.get('/api/scrape/regennetwork', async (req, res) => {
+app.get('/api/load/regennetwork', async (req, res) => {
     try {
-        console.log('Scraping Regen Network data...');
+        console.log('Loading Regen Network data...');
         const db = req.app.locals.db;
         const collection = db.collection(regenNetworkCollectionName);
-        await fetchAndInsertRegenData(collection);
+        await loadRegenData(collection);
 
-        res.json({ message: 'Regen Network scraping complete'});
+        res.json({ message: 'Regen Network loading complete'});
     } catch (error) {
-        console.error('Error scraping Regen Network data:', error);
-        res.status(500).json({ error: 'An error occurred while scraping Regen Network data.'});
+        console.error('Error loading Regen Network data:', error);
+        res.status(500).json({ error: 'An error occurred while loading Regen Network data.'});
     }
 });
 
-app.get('/api/scrape/GreenTrade', async (req, res) => {
+app.get('/api/load/GreenTrade', async (req, res) => {
     try {
-        console.log('Scraping GreenTrade data...');
+        console.log('Loading GreenTrade data...');
         const db = req.app.locals.db;
-        await scrapeGreenTradeData(db, greenTradeCollectionName);
+        await loadGreenTradeData(db, greenTradeCollectionName);
 
-        res.json({ message: 'GreenTrade scraping complete' });
+        res.json({ message: 'GreenTrade loading complete' });
     } catch (error) {
-        console.error('Error scraping GreenTrade data:', error);
-        res.status(500).json({ error: 'An error occurred while scraping GreenTrade data.' });
+        console.error('Error loading GreenTrade data:', error);
+        res.status(500).json({ error: 'An error occurred while loading GreenTrade data.' });
     }
 });
 
-app.get('/api/scrape/Coorest', async (req, res) => {
+app.get('/api/load/Coorest', async (req, res) => {
     try {
-        console.log('Scraping Coorest data...');
+        console.log('Loading Coorest data...');
         const db = req.app.locals.db;
-        await scrapeCoorestData(db, coorestCollectionName);
+        await loadCoorestData(db, coorestCollectionName);
 
-        res.json({ message: 'Coorest scraping complete' });
+        res.json({ message: 'Coorest loading complete' });
     } catch (error) {
-        console.error('Error scraping Coorest data:', error);
-        res.status(500).json({ error: 'An error occurred while scraping Coorest data.' });
+        console.error('Error loading Coorest data:', error);
+        res.status(500).json({ error: 'An error occurred while loading Coorest data.' });
     }
 });
 

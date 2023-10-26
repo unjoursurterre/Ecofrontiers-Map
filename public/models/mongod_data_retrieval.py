@@ -37,7 +37,7 @@ for collection_name in collection_names:
             description = asset['description']
             asset_link = asset['assetLink']
             asset_type = asset['assetType']
-            seller = asset['seller']
+            issuer = asset['issuer']
 
             # Create a dictionary for each asset and add it to the marker_data list
             asset_info = {
@@ -47,7 +47,7 @@ for collection_name in collection_names:
                 "asset_type": asset_type,
                 "description": description,
                 "asset_link": asset_link,
-                "seller": seller
+                "issuer": issuer
             }
             marker_data.append(asset_info)
             asset_ids.add(asset_id)

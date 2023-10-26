@@ -7,7 +7,7 @@ const mongoURL =
 const dbName = 'ReFi-Asset-Map';
 const collectionName = 'Coorest';
 
-const scrapeCoorestData = async (db) => {
+const loadCoorestData = async (db) => {
   try {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
@@ -74,7 +74,7 @@ const scrapeCoorestData = async (db) => {
         description,
         coordinates,
         assetType: 'Output Rights',
-        seller: 'Coorest'
+        issuer: 'Coorest'
       };
 
       if (existingProject) {
@@ -109,4 +109,4 @@ try {
 }
 }
 
-module.exports = { scrapeCoorestData };
+module.exports = { loadCoorestData };

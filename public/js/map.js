@@ -23,7 +23,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
                 <h3>${asset.project_title}</h3>
                 <p><strong>Asset Type:</strong> ${asset.asset_type}</p>
                 <p><strong>Description:</strong> ${asset.description}</p>
-                <p><strong>Seller:</strong> ${asset.seller}</p>
+                <p><strong>Issuer:</strong> ${asset.issuer}</p>
                 <a href="${asset.asset_link}" target="_blank">Buy here</a>
                 `;
 
@@ -42,7 +42,7 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
         <h3>Amazon Green Wall NFT Series 3</h3>
         <p><strong>Asset Type:</strong> Natural Asset Ownership</p>
         <p><strong>Description:</strong> Moss has partners providing state of the art satellite imagery, updated every 6 days, with the highest resolution available in the market, and available to all NFT owners. These third party, independent partners will be responsible for MRV, and MOSS will hire and manage the contracts. The company will direct 20% of sales proceeds to a 30 year protection fund that will cover patrolling and maintenance of protection activities. One share = one hectare = one football field worth of your OWN piece of the Amazon Forest</p>
-        <p><strong>Seller:</strong> Moss</p>
+        <p><strong>Issuer:</strong> Moss</p>
         <a href="https://opensea.io/assets/matic/0x3a68b7f8baef34b28839dd8365551c51b8bbcb43/3" target="_blank">Buy here</a>
         `
     

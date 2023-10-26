@@ -7,7 +7,7 @@ const mongoURL =
 const dbName = 'ReFi-Asset-Map';
 const collectionName = 'SolidWorld1';
 
-const scrapeSolidWorldData = async (db) => {
+const loadSolidWorldData = async (db) => {
   try {
     const url = 'https://app.solid.world/projects';
     const response = await axios.get(url);
@@ -81,7 +81,7 @@ const scrapeSolidWorldData = async (db) => {
           description,
           coordinates,
           assetType: 'Forward Carbon Offset',
-          seller: 'SolidWorld'
+          issuer: 'SolidWorld'
         };
 
         if (existingProject) {
@@ -116,4 +116,4 @@ async function insertData(collection, data) {
   }
 }
 
-module.exports = { scrapeSolidWorldData };
+module.exports = { loadSolidWorldData };

@@ -52,7 +52,7 @@ const processAndInsertData = async (collection, data) => {
     
     const assetLink = data['@id'] || 'https://app.regen.network/projects/1';
     const description = data['regen:offsetProtocol']?.['schema:name'] || data['regen:projectType'] || 'Carbon offset bridged from Toucan Protocol';
-    const seller = 'Regen Network'
+    const issuer = 'Regen Network'
 
     const filteredData = {
       projectTitle,
@@ -60,7 +60,7 @@ const processAndInsertData = async (collection, data) => {
       assetType,
       assetLink,
       description,
-      seller
+      issuer
     };
 
     await collection.insertOne(filteredData);
@@ -70,7 +70,7 @@ const processAndInsertData = async (collection, data) => {
   }
 };
 
-const fetchAndInsertRegenData = async (collection) => {
+const loadRegenData = async (collection) => {
   for (const apiURL of apiURLs) {
     const data = await fetchRegenNetworkData(apiURL);
     if (data) {
@@ -100,7 +100,7 @@ const fetchAndInsertRegenData = async (collection) => {
           assetType,
           assetLink,
           description,
-          seller: 'Regen Network'
+          issuer: 'Regen Network'
         }
       };
       const options = { upsert: true };
@@ -115,4 +115,4 @@ const fetchAndInsertRegenData = async (collection) => {
   }
 };
 
-module.exports = { fetchAndInsertRegenData };
+module.exports = { loadRegenData };
