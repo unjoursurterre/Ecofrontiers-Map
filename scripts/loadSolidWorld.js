@@ -57,10 +57,19 @@ const loadSolidWorldData = async (db) => {
       const filter = { projectTitle };
       const existingProject = await collection.findOne(filter);
       console.log('Existing Project:', existingProject);
-        
-      // Send a GET request to Nominatim API
-      console.log('Nominatim API Request:', nominatimUrl + '?q=' + location);
-      const nominatimResponse = await axios.get(nominatimUrl, {
+
+      let coordinates;
+
+      // Check if the project title contains the word "Bangladesh"
+      if (projectTitle.includes("Bangladesh")) {
+        coordinates = {
+          lat: 21.404222,
+          lng: 92.000319,
+        };
+      } else {
+        // Send a GET request to Nominatim API
+        console.log('Nominatim API Request:', nominatimUrl + '?q=' + location);
+        const nominatimResponse = await axios.get(nominatimUrl, {
         params: {
           q: location,
           format: 'json',
@@ -69,10 +78,12 @@ const loadSolidWorldData = async (db) => {
       console.log('Nominatim API Response:', nominatimResponse.data);
 
       if (nominatimResponse.data.length > 0) {
-        const coordinates = {
+        coordinates = {
           lat: nominatimResponse.data[0].lat,
           lng: nominatimResponse.data[0].lon,
         };
+      }
+    }
 
         const newData = {
           location,
@@ -84,17 +95,18 @@ const loadSolidWorldData = async (db) => {
           issuer: 'SolidWorld'
         };
 
-        if (existingProject) {
-          // If the project exists, update the existing document
-          await collection.updateOne(filter, { $set: newData });
-          console.log('Updated data for', projectTitle);
-        } else {
-          // If the project doesn't exist, insert a new document
-          extractedData.push(newData);
-          console.log('Inserted data for', projectTitle);
+        if (coordinates) {
+          if (existingProject) {
+            // If the project exists, update the existing document
+            await collection.updateOne(filter, { $set: newData });
+            console.log('Updated data for', projectTitle);
+          } else {
+            // If the project doesn't exist, insert a new document
+            extractedData.push(newData);
+            console.log('Inserted data for', projectTitle);
+          }
         }
       }
-    }
 
     if (extractedData.length > 0) {
       await insertData(collection, extractedData);
