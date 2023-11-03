@@ -111,6 +111,9 @@ const mossMarker1Popup = new mapboxgl.Popup()
     .setHTML(mossMarker1Content);
 mossMarker1.setPopup(mossMarker1Popup);
 
+// Add the hard-coded marker to the allMarkers array
+allMarkers.push({ marker: mossMarker1, assetType: 'Natural Asset Ownership', issuer: 'Moss' });
+
 // Create hard-coded marker for Moss 2
 const mossMarker2 = new mapboxgl.Marker({ color: 'blue' })
     .setLngLat([-57.277130, -4.799042])
@@ -127,6 +130,9 @@ const mossMarker2Content = `
 const mossMarker2Popup = new mapboxgl.Popup()
     .setHTML(mossMarker2Content);
 mossMarker2.setPopup(mossMarker2Popup);
+
+// Add the hard-coded marker to the allMarkers array
+allMarkers.push({ marker: mossMarker2, assetType: 'Natural Asset Ownership', issuer: 'Moss' });
 
 // Create hard-coded marker for FlowCarbon
 const FlowCarbon = new mapboxgl.Marker({ color: 'green' })
@@ -145,6 +151,9 @@ const FlowCarbonPopup = new mapboxgl.Popup()
     .setHTML(FlowCarbonContent);
 FlowCarbon.setPopup(FlowCarbonPopup);
 
+// Add the hard-coded marker to the allMarkers array
+allMarkers.push({ marker: FlowCarbon, assetType: 'Forward Carbon Offset', issuer: 'FlowCarbon' });
+
 // Create hard-coded marker for Creol 1
 const Creol1 = new mapboxgl.Marker({ color: 'red' })
     .setLngLat([-73.25383, -3.74912])
@@ -161,6 +170,9 @@ const Creol1Content = `
 const Creol1Popup = new mapboxgl.Popup()
     .setHTML(Creol1Content);
 Creol1.setPopup(Creol1Popup);
+
+// Add the hard-coded marker to the allMarkers array
+allMarkers.push({ marker: Creol1, assetType: 'Carbon Offset', issuer: 'Creol' });
 
 // Create hard-coded marker for Frigg.eco
 const FriggEco = new mapboxgl.Marker({ color: 'orange' })
@@ -179,6 +191,9 @@ const FriggEcoPopup = new mapboxgl.Popup()
     .setHTML(FriggEcoContent);
 FriggEco.setPopup(FriggEcoPopup);
 
+// Add the hard-coded marker to the allMarkers array
+allMarkers.push({ marker: FriggEco, assetType: 'Green Bond', issuer: 'Frigg.eco' });
+
 // Create HTML elements for filtering
 const filterOptions = document.createElement('div');
 filterOptions.id = 'filter-options';
@@ -193,9 +208,6 @@ filterOptions.innerHTML = `
         <option value="Output Rights">Output Rights</option>
         <option value="Non-Carbon Offset">Non-Carbon Offset</option>
     </select>
-
-    <label for="location-input">Location:</label>
-    <input type="text" id="location-input" placeholder="Enter location...">
 
     <label for="issuer-select">Issuer:</label>
     <select id="issuer-select">
