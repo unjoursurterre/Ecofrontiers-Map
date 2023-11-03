@@ -29,6 +29,39 @@ function getLayerInfoForAssetType(assetType) {
     }
 }
 
+// Create an array to store all markers
+const allMarkers = [];
+
+// Function to add markers to the map
+function addMarker(asset) {
+    // Get the layer ID and pin color based on the asset type
+    const { layerId, color } = getLayerInfoForAssetType(asset.asset_type);
+
+    // Create a marker with the specified color
+    const marker = new mapboxgl.Marker({ color: color })
+    .setLngLat([asset.longitude, asset.latitude])
+    .addTo(map);
+    
+    // Create the HTML content for the pop-up
+    const popupContent = `
+    <h3>${asset.project_title}</h3>
+    <p><strong>Asset Type:</strong> ${asset.asset_type}</p>
+    <p><strong>Description:</strong> ${asset.description}</p>
+    <p><strong>Issuer:</strong> ${asset.issuer}</p>
+    <a href="${asset.asset_link}" target="_blank">Buy here</a>
+    `;
+
+    const popup = new mapboxgl.Popup()
+        .setHTML(popupContent);
+    marker.setPopup(popup);
+
+    // Add the marker to the array
+    allMarkers.push({ marker, assetType: asset.asset_type, issuer: asset.issuer });
+
+    // Initially, add all markers to the map
+    marker.addTo(map);
+}
+
 // Load marker data from a JSON file and add markers
 fetch('../models/all_marker_data.json?' + new Date().getTime())
     .then(response => response.json())
@@ -36,29 +69,30 @@ fetch('../models/all_marker_data.json?' + new Date().getTime())
         console.log(data);
         data.forEach(asset => {
             console.log(asset);
-
-            // Get the layer ID and pin color based on the asset type
-            const { layerId, color } = getLayerInfoForAssetType(asset.asset_type);
-
-            // Create a marker with the specified color
-            const marker = new mapboxgl.Marker({ color: color })
-                .setLngLat([asset.longitude, asset.latitude])
-                .addTo(map);
-
-            // Create the HTML content for the pop-up
-            const popupContent = `
-                <h3>${asset.project_title}</h3>
-                <p><strong>Asset Type:</strong> ${asset.asset_type}</p>
-                <p><strong>Description:</strong> ${asset.description}</p>
-                <p><strong>Issuer:</strong> ${asset.issuer}</p>
-                <a href="${asset.asset_link}" target="_blank">Buy here</a>
-            `;
-
-            const popup = new mapboxgl.Popup()
-                .setHTML(popupContent);
-            marker.setPopup(popup);
+            addMarker(asset);
         });
+    })
+    .catch(error => {
+        console.error('Error loading marker data:', error);
     });
+
+// Function to update markers based on filters
+function updateMarkers(filterAssetType, filterIssuer) {
+    console.log('Updating markers with filterAssetType:', filterAssetType, 'and filterIssuer:', filterIssuer);
+    
+    allMarkers.forEach(markerInfo => {
+        const { marker, assetType, issuer } = markerInfo;
+        const isVisible =
+            (filterAssetType === 'all' || assetType === filterAssetType) &&
+            (filterIssuer === 'all' || issuer === filterIssuer);
+
+        if (isVisible) {
+            marker.addTo(map);
+        } else {
+            marker.remove();
+        }
+    });
+}
 
 // Create hard-coded marker for Moss 1
 const mossMarker1 = new mapboxgl.Marker({ color: 'blue' })
@@ -144,6 +178,53 @@ const FriggEcoContent = `
 const FriggEcoPopup = new mapboxgl.Popup()
     .setHTML(FriggEcoContent);
 FriggEco.setPopup(FriggEcoPopup);
+
+// Create HTML elements for filtering
+const filterOptions = document.createElement('div');
+filterOptions.id = 'filter-options';
+filterOptions.innerHTML = `
+    <label for="asset-type-select">Asset Type:</label>
+    <select id="asset-type-select">
+        <option value="all">All</option>
+        <option value="Forward Carbon Offset">Forward Carbon Offset</option>
+        <option value="Natural Asset Ownership">Natural Asset Ownership</option>
+        <option value="Carbon Offset">Carbon Offset</option>
+        <option value="Green Bond">Green Bond</option>
+        <option value="Output Rights">Output Rights</option>
+        <option value="Non-Carbon Offset">Non-Carbon Offset</option>
+    </select>
+
+    <label for="location-input">Location:</label>
+    <input type="text" id="location-input" placeholder="Enter location...">
+
+    <label for="issuer-select">Issuer:</label>
+    <select id="issuer-select">
+        <option value="all">All</option>
+        <option value="Moss">Moss</option>
+        <option value="FlowCarbon">FlowCarbon</option>
+        <option value="Creol">Creol</option>
+        <option value="Frigg.eco">Frigg.eco</option>
+        <option value="SolidWorld">SolidWorld</option>
+        <option value="Regen Network">Regen Network</option>
+        <option value="GreenTrade">GreenTrade</option>
+        <option value="Coorest">Coorest</option>
+    </select>
+    
+    <button id="apply-filter">Apply Filter</button>
+`;
+
+document.body.appendChild(filterOptions);
+
+// Add an event listener to apply filters when the button is clicked
+document.getElementById('apply-filter').addEventListener('click', function () {
+    console.log('Apply Filter button clicked');
+    const assetTypeSelect = document.getElementById('asset-type-select');
+    const issuerSelect = document.getElementById('issuer-select');
+    const filterAssetType = assetTypeSelect.options[assetTypeSelect.selectedIndex].value;
+    const filterIssuer = issuerSelect.options[issuerSelect.selectedIndex].value;
+
+    updateMarkers(filterAssetType, filterIssuer);
+});
 
 // Add a layer for each asset type
 map.on('load', function () {
