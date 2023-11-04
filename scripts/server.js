@@ -29,6 +29,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'views', 'index.html'));
   });
 
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'views', 'index.html'));
+});
+
 // app.get('/api/load/solidworld', async (req, res) => {
     // try {
         // console.log('Loading SolidWorld data...');
