@@ -8,5 +8,8 @@
     "mapbox-gl": "^2.15.0",
     "mongodb": "^5.7.0",
     "puppeteer": "^21.3.4"
+  },
+  "scripts": {
+    "start": "node scripts/server.js"
   }
 }
