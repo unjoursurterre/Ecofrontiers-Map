@@ -25,7 +25,7 @@ app.use(cors({ origin: 'http://localhost:8080' }));
 // Serve the front-end HTML
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.get('/index.html', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'views', 'index.html'));
   });
 
