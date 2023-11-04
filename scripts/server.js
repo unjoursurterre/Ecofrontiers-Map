@@ -107,7 +107,7 @@ app.listen(port, () => {
     // process.exit(0);
 // });
 
-process.on('SIGNIT', () => {
+process.on('SIGINT', () => {
     console.log('Server shutting down...');
     process.exit(0);
 });
