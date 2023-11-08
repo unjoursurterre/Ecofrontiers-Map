@@ -1,4 +1,6 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoidW5qb3Vyc3VydGVycmUiLCJhIjoiY2xtbDVlZmtxMDdrbzJtdG4wcGswYWNubSJ9.gYNEOES5V6knJ5-90vPDuw';
+require('dotenv').config();
+
+mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN;
 
 const map = new mapboxgl.Map({
     container: 'map',
